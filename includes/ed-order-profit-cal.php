@@ -12,6 +12,8 @@ if (!class_exists('Ed_Order_Profit_Cal')) {
         public function __construct() {
             add_action('add_meta_boxes', array($this, 'order_profit_cal_box'));
             add_action('save_post', array($this, 'handel_order_profit_cal_submit'), 10, 2);
+			add_action( 'woocommerce_product_options_pricing', [$this, 'add_cogs_field'] );
+			add_action( 'woocommerce_process_product_meta', [$this, 'save_cogs_field'] );
 
             $this->ed_function = new Easy_Dash_Function();
         }
@@ -112,6 +114,28 @@ if (!class_exists('Ed_Order_Profit_Cal')) {
                 }
             }
         }
+		
+		public function add_cogs_field() {
+			global $product_object;
+			woocommerce_wp_text_input(
+				array(
+					'id' => '_cogs',
+					'label' => __( 'COGS', 'text-domain' ),
+					'desc_tip' => true,
+					'description' => __( 'Enter the Cost of Goods Sold', 'text-domain' ),
+					'value' => $product_object->get_meta( '_cogs', true ),
+					'type' => 'text',
+				)
+			);
+		}
+		
+		public function save_cogs_field( $product_id ) {
+			$cogs = $_POST['_cogs'];
+			if ( ! empty( $cogs ) ) {
+				update_post_meta( $product_id, '_cogs', sanitize_text_field( $cogs ) );
+			}
+		}
+		
     }
 }
 

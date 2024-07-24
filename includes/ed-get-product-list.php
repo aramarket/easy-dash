@@ -17,13 +17,18 @@ if (!class_exists('Ed_Get_Product_List')) {
 
         // Display the list of aggregated products and quantities from processing orders
         public function product_list_page_creation() {
-                if (isset($_POST['update_status']))  {
-                    es_function_for_update_status_within_portal();
-                    echo '<div class="notice notice-success is-dismissible"><p>Order updated successfully</p></div>';
-                }
             ?>
             <h2>Update Order Status</h2>
-
+			<?php 
+			if (isset($_POST['update_status']))  {
+				if (class_exists('AramarketCustom')) {
+					(new AramarketCustom())->autoCheckAndUpdateOrderStatus();
+					echo '<div class="notice notice-success is-dismissible"><p>Order updated successfully</p></div>';
+				} else {
+					echo '<div class="notice notice-error is-dismissible"><p>Class AramarketCustom not found</p></div>';
+				}
+			}
+			?>
             <form method="post" action="">
                 <table class="form-table">
                 <tr valign="top">

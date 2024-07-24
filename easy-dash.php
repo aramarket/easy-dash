@@ -28,13 +28,14 @@ if (!defined('EASY_DASH_DIR')) {
 require_once EASY_DASH_DIR . 'includes/ed-setting-page.php';
 
 // Pages
-// require_once EASY_DASH_DIR . 'includes/ed-get-product-list.php';
-// require_once EASY_DASH_DIR . 'includes/ed-frequantly-bought-together.php'; 
+require_once EASY_DASH_DIR . 'includes/ed-get-product-list.php';
+require_once EASY_DASH_DIR . 'includes/ed-frequantly-bought-together.php'; 
 
 // Functions
 require_once EASY_DASH_DIR . 'includes/ed-general-function.php';
 require_once EASY_DASH_DIR . 'includes/ed-order-profit-cal.php';
 
+require_once EASY_DASH_DIR . 'includes/ed-order-profit-cal.php';
 
 
 
@@ -42,6 +43,8 @@ require_once EASY_DASH_DIR . 'includes/ed-order-profit-cal.php';
 function run_easy_dash_main() {
     new Easy_Dash_Setting();
 	new Ed_Order_Profit_Cal();
+	new Ed_Get_Product_List();
+	new Ed_Frequantly_Bought_Together();
 }
 
 run_easy_dash_main();
